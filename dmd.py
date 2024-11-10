@@ -29,11 +29,11 @@ model = dict(
 
 # dataset settings
 dataset_type = 'VideoDataset'
-data_root = '/media/karin-22/sumsung/Karin/DMD/dataset/train/some'
-data_root_val = '/media/karin-22/sumsung/Karin/DMD/dataset/val/some'
-ann_file_train = '/media/karin-22/sumsung/Karin/DMD/dataset/train/labels.txt'
-ann_file_val = '/media/karin-22/sumsung/Karin/DMD/dataset/val/labels.txt'
-ann_file_test = '/media/karin-22/sumsung/Karin/DMD/dataset/test/labels.txt'
+data_root = '/media/metis/sumsung/Karin/DMD/dataset/train/some'
+data_root_val = '/media/metis/sumsung/Karin/DMD/dataset/val/some'
+ann_file_train = '/media/metis/sumsung/Karin/DMD/dataset/train/new_new_labels.txt'
+ann_file_val = '/media/metis/sumsung/Karin/DMD/dataset/val/new_new_labels.txt'
+ann_file_test = '/media/metis/sumsung/Karin/DMD/dataset/test/new_new_labels.txt'
 
 file_client_args = dict(io_backend='disk')
 
@@ -137,7 +137,15 @@ param_scheduler = [
         gamma=0.1)
 ]
 
-default_hooks = dict(checkpoint=dict(interval=5))
+default_hooks = dict(
+    checkpoint=dict(
+        interval=0,  # 通常のエポックごとの保存を無効にする
+        save_best='acc/top1',  # 'acc/top1' を基準にベストモデルのみを保存
+        save_last=True  # 最後のモデルは保存
+    )
+)
+
+
 
 # Default setting for scaling LR automatically
 #   - `enable` means enable scaling LR automatically
